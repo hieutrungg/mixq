@@ -149,31 +149,31 @@ Definition of done:
 
 Create a `Preset` type containing:
 
-- id
-- name
-- sound configuration
-- creation timestamp
+- [x] id
+- [x] name
+- [x] sound configuration
+- [x] creation timestamp
 
 ## Default presets
 
 Create:
 
-- [ ] Deep Focus
-- [ ] Rainy Café
-- [ ] Night Coding
+- [x] Deep Focus
+- [x] Rainy Café
+- [x] Night Coding
 
 ## Preset controls
 
-- [ ] Save current mix
-- [ ] Name preset
-- [ ] Load preset
-- [ ] Delete preset
+- [x] Save current mix
+- [x] Name preset
+- [x] Load preset
+- [x] Delete preset
 
 ## Persistence
 
-- [ ] Create reusable `useLocalStorage` hook
-- [ ] Persist custom presets
-- [ ] Restore presets after refresh
+- [x] Create reusable `useLocalStorage` hook
+- [x] Persist custom presets
+- [x] Restore presets after refresh
 
 Definition of done:
 

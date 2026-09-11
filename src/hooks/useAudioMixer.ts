@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { Howl } from 'howler'
 
+import type { Preset } from '../types/preset'
 import type { SoundDefinition, SoundId, SoundStateMap } from '../types/sound'
 
 function createInitialState(definitions: readonly SoundDefinition[]): SoundStateMap {
@@ -131,6 +132,32 @@ export function useAudioMixer(definitions: readonly SoundDefinition[]) {
     [updateSoundState],
   )
 
+  const applyPreset = useCallback(
+    (preset: Preset) => {
+      definitions.forEach((sound) => {
+        const settings = preset.sounds[sound.id]
+        const howl = howlsRef.current.get(sound.id)
+        if (!settings || !howl) return
+
+        const volume = Math.min(1, Math.max(0, settings.volume))
+        howl.volume(volume)
+        updateSoundState(sound.id, {
+          isActive: settings.isActive,
+          isPlaying: settings.isActive,
+          volume,
+          error: null,
+        })
+
+        if (settings.isActive) {
+          if (!howl.playing()) howl.play()
+        } else {
+          howl.stop()
+        }
+      })
+    },
+    [definitions, updateSoundState],
+  )
+
   return {
     soundStates,
     toggleSound,
@@ -138,5 +165,6 @@ export function useAudioMixer(definitions: readonly SoundDefinition[]) {
     pauseSound,
     stopSound,
     setSoundVolume,
+    applyPreset,
   }
 }

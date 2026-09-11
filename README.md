@@ -76,4 +76,6 @@ Audio playback lives in a custom hook instead of UI components. Data definitions
 
 The audio engine is implemented in `src/hooks/useAudioMixer.ts`. It owns every Howler instance and exposes typed playback and volume operations; sound cards remain presentational components. Audio asset provenance and loop-generation details are documented in `public/audio/README.md`.
 
+Presets are represented by the explicit `Preset` model in `src/types/preset.ts`. The reusable `useLocalStorage` hook persists the default and user-created presets under the versioned `mixq.presets.v1` key, while the mixer hook applies saved sound states directly to the corresponding Howler instances.
+
 Project progress and milestone scope are tracked in [`PLAN.md`](./PLAN.md).

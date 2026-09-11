@@ -2,8 +2,12 @@ import { CloudRain, Coffee, Flame, Keyboard, Trees, Waves } from 'lucide-react'
 
 import Header from './components/layout/Header'
 import SoundCard from './components/mixer/SoundCard'
+import PresetPanel from './components/presets/PresetPanel'
+import { defaultPresets } from './data/defaultPresets'
 import { sounds } from './data/sounds'
 import { useAudioMixer } from './hooks/useAudioMixer'
+import { useLocalStorage } from './hooks/useLocalStorage'
+import type { Preset, PresetSoundMap } from './types/preset'
 import type { SoundIconName } from './types/sound'
 
 const soundIcons = {
@@ -16,7 +20,38 @@ const soundIcons = {
 } satisfies Record<SoundIconName, typeof CloudRain>
 
 function App() {
-  const { soundStates, toggleSound, setSoundVolume } = useAudioMixer(sounds)
+  const { soundStates, toggleSound, setSoundVolume, applyPreset } = useAudioMixer(sounds)
+  const [presets, setPresets] = useLocalStorage<Preset[]>('mixq.presets.v1', defaultPresets)
+
+  const savePreset = (name: string) => {
+    const presetSounds = Object.fromEntries(
+      sounds.map((sound) => [
+        sound.id,
+        {
+          isActive: soundStates[sound.id].isActive,
+          volume: soundStates[sound.id].volume,
+        },
+      ]),
+    ) as PresetSoundMap
+
+    const preset: Preset = {
+      id:
+        typeof crypto.randomUUID === 'function'
+          ? crypto.randomUUID()
+          : `preset-${Date.now().toString(36)}`,
+      name,
+      sounds: presetSounds,
+      createdAt: new Date().toISOString(),
+    }
+
+    setPresets((currentPresets) => [...currentPresets, preset])
+  }
+
+  const deletePreset = (presetId: string) => {
+    setPresets((currentPresets) =>
+      currentPresets.filter((preset) => preset.id !== presetId),
+    )
+  }
 
   return (
     <div className="min-h-screen bg-[#0b0f12] text-stone-100">
@@ -67,6 +102,13 @@ function App() {
             })}
           </div>
         </section>
+
+        <PresetPanel
+          presets={presets}
+          onSave={savePreset}
+          onLoad={applyPreset}
+          onDelete={deletePreset}
+        />
       </main>
     </div>
   )
