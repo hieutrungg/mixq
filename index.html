@@ -3,6 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta id="theme-color" name="theme-color" content="#0b0f12" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <script>
       ;(() => {
@@ -16,6 +17,7 @@
                 : 'light'
           document.documentElement.dataset.theme = theme
           document.documentElement.style.colorScheme = theme
+          document.querySelector('#theme-color').content = theme === 'dark' ? '#0b0f12' : '#f3f7f6'
         } catch {
           document.documentElement.dataset.theme = 'dark'
         }
@@ -24,6 +26,19 @@
     <meta
       name="description"
       content="Mixq is a minimalist ambient sound mixer for focus and relaxation."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Mixq" />
+    <meta property="og:title" content="Mixq — Ambient Sound Mixer" />
+    <meta
+      property="og:description"
+      content="Create a focused atmosphere by mixing calming ambient sounds and saving your favorite combinations."
+    />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="Mixq — Ambient Sound Mixer" />
+    <meta
+      name="twitter:description"
+      content="Mix calming ambient sounds for focus, relaxation, reading, and coding."
     />
     <title>Mixq — Ambient Sound Mixer</title>
   </head>

@@ -30,6 +30,9 @@ export function useTheme() {
   useEffect(() => {
     document.documentElement.dataset.theme = theme
     document.documentElement.style.colorScheme = theme
+    document
+      .querySelector<HTMLMetaElement>('#theme-color')
+      ?.setAttribute('content', theme === 'dark' ? '#0b0f12' : '#f3f7f6')
   }, [theme])
 
   useEffect(() => {

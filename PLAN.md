@@ -270,29 +270,29 @@ npm run build
 
 Verify:
 
-- [ ] production build succeeds
-- [ ] no TypeScript errors
-- [ ] no console errors
-- [ ] audio assets load correctly
+- [x] production build succeeds
+- [x] no TypeScript errors
+- [x] no console errors
+- [x] audio assets load correctly
 
 ## Metadata
 
-- [ ] page title
-- [ ] meta description
-- [ ] favicon
-- [ ] Open Graph metadata where applicable
+- [x] page title
+- [x] meta description
+- [x] favicon
+- [x] Open Graph metadata where applicable
 
 ## Performance
 
-- [ ] inspect audio asset sizes
-- [ ] avoid unnecessarily large images
-- [ ] lazy-load resources where useful
+- [x] inspect audio asset sizes
+- [x] avoid unnecessarily large images
+- [x] lazy-load resources where useful
 
 ## Vercel
 
-- [ ] Push project to GitHub
+- [x] Push project to GitHub
 - [ ] Import repository into Vercel
-- [ ] Configure build settings
+- [x] Configure build settings
 - [ ] Deploy production version
 - [ ] Verify production URL
 - [ ] Test audio on deployed version

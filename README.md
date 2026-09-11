@@ -84,4 +84,21 @@ Theme handling follows the operating-system preference on first visit and stores
 
 The M5 layout was browser-verified at 360, 768, 1024, and 1440 pixels. All interactive controls remain inside the viewport, provide keyboard focus states, and expose accessible names for icon buttons and sliders.
 
+## Deploy to Vercel
+
+Mixq includes `vercel.json`, so Vercel can use the correct Vite build command, `dist` output directory, cache policy, and baseline security headers without extra environment variables.
+
+1. Open [Vercel New Project](https://vercel.com/new) and sign in with GitHub.
+2. Find and import the `hieutrungg/mixq` repository.
+3. Confirm that the framework preset is **Vite** and the root directory is `./`.
+4. Keep the detected build command as `npm run build` and output directory as `dist`.
+5. Leave Environment Variables empty, then choose **Deploy**.
+6. Open the generated URL and verify that every sound reaches the Ready state, playback works, theme preference survives refresh, and the page remains usable on mobile.
+
+After the Git integration is connected, pushes to `main` create production deployments automatically, while pull requests and other branches receive preview deployments.
+
+## Production notes
+
+The six generated WAV loops total 4,608,264 bytes (about 4.4 MiB). They are core application content and preload so every sound is ready for immediate mixing; Vercel caches them with a one-day browser lifetime and a one-week stale-while-revalidate window. Content-hashed JavaScript and CSS assets use immutable caching. The interface does not ship decorative bitmap images.
+
 Project progress and milestone scope are tracked in [`PLAN.md`](./PLAN.md).
