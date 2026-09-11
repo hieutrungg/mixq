@@ -1,0 +1,72 @@
+# Mixq
+
+Mixq is a minimalist ambient sound mixer for focus, relaxation, reading, and coding. The MVP is a frontend-only application built with React, TypeScript, Vite, Tailwind CSS, Lucide React, and Howler.js.
+
+## Prerequisites
+
+- Node.js
+- npm
+
+This project was bootstrapped with Node.js 25.9.0 and npm 11.12.1 through NVM for Windows.
+
+## Local development
+
+Install the dependencies:
+
+```bash
+npm install
+```
+
+Start the Vite development server:
+
+```bash
+npm run dev
+```
+
+Vite prints the local URL in the terminal, usually `http://localhost:5173`.
+
+## Verification
+
+Run the TypeScript compiler without emitting files:
+
+```bash
+npm run typecheck
+```
+
+Create a production build:
+
+```bash
+npm run build
+```
+
+Preview the production build locally:
+
+```bash
+npm run preview
+```
+
+## Project structure
+
+```text
+src/
+  components/
+    layout/
+    mixer/
+    presets/
+    timer/
+    ui/
+  hooks/
+  data/
+  types/
+  utils/
+  App.tsx
+  main.tsx
+public/
+  audio/
+  icons/
+```
+
+Audio playback will live in a custom hook instead of UI components. Data definitions and TypeScript models have dedicated directories so future milestones can add behavior without coupling it to presentation code.
+
+Project progress and milestone scope are tracked in [`PLAN.md`](./PLAN.md).
+
