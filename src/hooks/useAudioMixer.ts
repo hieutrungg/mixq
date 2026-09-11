@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
-import { Howl } from 'howler'
+import { Howl, Howler } from 'howler'
 
 import type { Preset } from '../types/preset'
 import type { SoundDefinition, SoundId, SoundStateMap } from '../types/sound'
@@ -22,6 +22,7 @@ function createInitialState(definitions: readonly SoundDefinition[]): SoundState
 export function useAudioMixer(definitions: readonly SoundDefinition[]) {
   const howlsRef = useRef(new Map<SoundId, Howl>())
   const [soundStates, setSoundStates] = useState(() => createInitialState(definitions))
+  const [masterVolume, setMasterVolumeState] = useState(1)
   const soundStatesRef = useRef(soundStates)
 
   useEffect(() => {
@@ -158,13 +159,65 @@ export function useAudioMixer(definitions: readonly SoundDefinition[]) {
     [definitions, updateSoundState],
   )
 
+  const playAll = useCallback(() => {
+    definitions.forEach((sound) => {
+      const state = soundStatesRef.current[sound.id]
+      const howl = howlsRef.current.get(sound.id)
+      if (state.isActive && howl && !howl.playing()) howl.play()
+    })
+  }, [definitions])
+
+  const pauseAll = useCallback(() => {
+    definitions.forEach((sound) => {
+      const state = soundStatesRef.current[sound.id]
+      const howl = howlsRef.current.get(sound.id)
+      if (state.isActive && howl?.playing()) howl.pause()
+    })
+
+    setSoundStates((currentStates) => {
+      const nextStates = { ...currentStates }
+      definitions.forEach((sound) => {
+        if (currentStates[sound.id].isActive) {
+          nextStates[sound.id] = { ...currentStates[sound.id], isPlaying: false }
+        }
+      })
+      return nextStates
+    })
+  }, [definitions])
+
+  const stopAll = useCallback(() => {
+    howlsRef.current.forEach((howl) => howl.stop())
+    setSoundStates((currentStates) => {
+      const nextStates = { ...currentStates }
+      definitions.forEach((sound) => {
+        nextStates[sound.id] = {
+          ...currentStates[sound.id],
+          isActive: false,
+          isPlaying: false,
+        }
+      })
+      return nextStates
+    })
+  }, [definitions])
+
+  const setMasterVolume = useCallback((volume: number) => {
+    const normalizedVolume = Math.min(1, Math.max(0, volume))
+    Howler.volume(normalizedVolume)
+    setMasterVolumeState(normalizedVolume)
+  }, [])
+
   return {
     soundStates,
+    masterVolume,
     toggleSound,
     playSound,
     pauseSound,
     stopSound,
     setSoundVolume,
     applyPreset,
+    playAll,
+    pauseAll,
+    stopAll,
+    setMasterVolume,
   }
 }

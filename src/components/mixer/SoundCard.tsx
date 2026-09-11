@@ -68,7 +68,7 @@ function SoundCard({
               role={error ? 'alert' : undefined}
               className={`mt-1 text-sm ${isPlaying ? 'text-teal-300' : 'text-stone-500'}`}
             >
-              {error ? 'Unavailable' : isPlaying ? 'Playing' : 'Ready'}
+              {error ? 'Unavailable' : isPlaying ? 'Playing' : isActive ? 'Paused' : 'Ready'}
             </p>
           </div>
           <span className="text-sm tabular-nums text-stone-500">{Math.round(volume * 100)}%</span>

@@ -186,10 +186,10 @@ Definition of done:
 
 ## Master controls
 
-- [ ] Play active sounds
-- [ ] Pause all
-- [ ] Stop all
-- [ ] Master volume slider
+- [x] Play active sounds
+- [x] Pause all
+- [x] Stop all
+- [x] Master volume slider
 
 ## Focus timer
 
@@ -199,13 +199,13 @@ Create:
 
 Timer features:
 
-- [ ] 25-minute preset
-- [ ] 45-minute preset
-- [ ] 60-minute preset
-- [ ] Start
-- [ ] Pause
-- [ ] Reset
-- [ ] Remaining-time display
+- [x] 25-minute preset
+- [x] 45-minute preset
+- [x] 60-minute preset
+- [x] Start
+- [x] Pause
+- [x] Reset
+- [x] Remaining-time display
 
 Definition of done:
 

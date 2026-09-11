@@ -1,8 +1,10 @@
 import { CloudRain, Coffee, Flame, Keyboard, Trees, Waves } from 'lucide-react'
 
 import Header from './components/layout/Header'
+import MasterControls from './components/mixer/MasterControls'
 import SoundCard from './components/mixer/SoundCard'
 import PresetPanel from './components/presets/PresetPanel'
+import FocusTimer from './components/timer/FocusTimer'
 import { defaultPresets } from './data/defaultPresets'
 import { sounds } from './data/sounds'
 import { useAudioMixer } from './hooks/useAudioMixer'
@@ -20,8 +22,21 @@ const soundIcons = {
 } satisfies Record<SoundIconName, typeof CloudRain>
 
 function App() {
-  const { soundStates, toggleSound, setSoundVolume, applyPreset } = useAudioMixer(sounds)
+  const {
+    soundStates,
+    masterVolume,
+    toggleSound,
+    setSoundVolume,
+    applyPreset,
+    playAll,
+    pauseAll,
+    stopAll,
+    setMasterVolume,
+  } = useAudioMixer(sounds)
   const [presets, setPresets] = useLocalStorage<Preset[]>('mixq.presets.v1', defaultPresets)
+  const soundStateList = Object.values(soundStates)
+  const activeCount = soundStateList.filter((sound) => sound.isActive).length
+  const playingCount = soundStateList.filter((sound) => sound.isPlaying).length
 
   const savePreset = (name: string) => {
     const presetSounds = Object.fromEntries(
@@ -69,6 +84,19 @@ function App() {
             Mix sounds. Focus. Relax.
           </p>
         </section>
+
+        <div className="mb-12 grid gap-4 lg:grid-cols-[minmax(0,1.65fr)_minmax(19rem,0.75fr)]">
+          <MasterControls
+            activeCount={activeCount}
+            playingCount={playingCount}
+            masterVolume={masterVolume}
+            onPlayAll={playAll}
+            onPauseAll={pauseAll}
+            onStopAll={stopAll}
+            onMasterVolumeChange={setMasterVolume}
+          />
+          <FocusTimer />
+        </div>
 
         <section aria-labelledby="soundscapes-heading">
           <div className="mb-5 flex items-end justify-between gap-4">
