@@ -100,15 +100,15 @@ Definition of done:
 
 ## Audio assets
 
-- [ ] Add licensed or royalty-free audio loops
-- [ ] Store audio files under `public/audio`
-- [ ] Verify seamless looping
+- [x] Add licensed or royalty-free audio loops
+- [x] Store audio files under `public/audio`
+- [x] Verify seamless looping
 
 ## Sound definitions
 
-- [ ] Create `SoundDefinition` type
-- [ ] Create sound configuration data
-- [ ] Map UI cards from sound configuration
+- [x] Create `SoundDefinition` type
+- [x] Create sound configuration data
+- [x] Map UI cards from sound configuration
 
 ## Audio mixer
 
@@ -118,21 +118,21 @@ Create:
 
 Responsibilities:
 
-- [ ] initialize Howler audio instances
-- [ ] toggle sound
-- [ ] play sound
-- [ ] pause sound
-- [ ] stop sound
-- [ ] loop audio
-- [ ] update individual volume
-- [ ] track active sounds
+- [x] initialize Howler audio instances
+- [x] toggle sound
+- [x] play sound
+- [x] pause sound
+- [x] stop sound
+- [x] loop audio
+- [x] update individual volume
+- [x] track active sounds
 
 ## UI integration
 
-- [ ] Connect play button
-- [ ] Connect volume slider
-- [ ] Display active state
-- [ ] Support multiple simultaneous sounds
+- [x] Connect play button
+- [x] Connect volume slider
+- [x] Display active state
+- [x] Support multiple simultaneous sounds
 
 Definition of done:
 

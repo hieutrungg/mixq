@@ -39,6 +39,12 @@ Create a production build:
 npm run build
 ```
 
+Regenerate the original procedural audio loops:
+
+```bash
+npm run generate:audio
+```
+
 Preview the production build locally:
 
 ```bash
@@ -66,7 +72,8 @@ public/
   icons/
 ```
 
-Audio playback will live in a custom hook instead of UI components. Data definitions and TypeScript models have dedicated directories so future milestones can add behavior without coupling it to presentation code.
+Audio playback lives in a custom hook instead of UI components. Data definitions and TypeScript models have dedicated directories so future milestones can add behavior without coupling it to presentation code.
+
+The audio engine is implemented in `src/hooks/useAudioMixer.ts`. It owns every Howler instance and exposes typed playback and volume operations; sound cards remain presentational components. Audio asset provenance and loop-generation details are documented in `public/audio/README.md`.
 
 Project progress and milestone scope are tracked in [`PLAN.md`](./PLAN.md).
-

@@ -1,53 +1,22 @@
-import { useState } from 'react'
 import { CloudRain, Coffee, Flame, Keyboard, Trees, Waves } from 'lucide-react'
 
 import Header from './components/layout/Header'
 import SoundCard from './components/mixer/SoundCard'
+import { sounds } from './data/sounds'
+import { useAudioMixer } from './hooks/useAudioMixer'
+import type { SoundIconName } from './types/sound'
 
-const sounds = [
-  { id: 'rain', name: 'Rain', icon: CloudRain, iconClassName: 'text-sky-300' },
-  { id: 'cafe', name: 'Café', icon: Coffee, iconClassName: 'text-amber-300' },
-  { id: 'fireplace', name: 'Fireplace', icon: Flame, iconClassName: 'text-orange-300' },
-  { id: 'forest', name: 'Forest', icon: Trees, iconClassName: 'text-emerald-300' },
-  { id: 'ocean-waves', name: 'Ocean Waves', icon: Waves, iconClassName: 'text-cyan-300' },
-  { id: 'keyboard', name: 'Keyboard', icon: Keyboard, iconClassName: 'text-violet-300' },
-] as const
-
-type SoundId = (typeof sounds)[number]['id']
-
-type SoundUiState = {
-  isActive: boolean
-  volume: number
-}
-
-const initialSoundStates: Record<SoundId, SoundUiState> = {
-  rain: { isActive: true, volume: 68 },
-  cafe: { isActive: false, volume: 44 },
-  fireplace: { isActive: false, volume: 52 },
-  forest: { isActive: true, volume: 36 },
-  'ocean-waves': { isActive: false, volume: 58 },
-  keyboard: { isActive: false, volume: 32 },
-}
+const soundIcons = {
+  rain: CloudRain,
+  cafe: Coffee,
+  fireplace: Flame,
+  forest: Trees,
+  ocean: Waves,
+  keyboard: Keyboard,
+} satisfies Record<SoundIconName, typeof CloudRain>
 
 function App() {
-  const [soundStates, setSoundStates] = useState(initialSoundStates)
-
-  const toggleSound = (soundId: SoundId) => {
-    setSoundStates((currentStates) => ({
-      ...currentStates,
-      [soundId]: {
-        ...currentStates[soundId],
-        isActive: !currentStates[soundId].isActive,
-      },
-    }))
-  }
-
-  const setVolume = (soundId: SoundId, volume: number) => {
-    setSoundStates((currentStates) => ({
-      ...currentStates,
-      [soundId]: { ...currentStates[soundId], volume },
-    }))
-  }
+  const { soundStates, toggleSound, setSoundVolume } = useAudioMixer(sounds)
 
   return (
     <div className="min-h-screen bg-[#0b0f12] text-stone-100">
@@ -85,12 +54,14 @@ function App() {
                 <SoundCard
                   key={sound.id}
                   name={sound.name}
-                  icon={sound.icon}
+                  icon={soundIcons[sound.icon]}
                   iconClassName={sound.iconClassName}
                   isActive={state.isActive}
+                  isPlaying={state.isPlaying}
                   volume={state.volume}
+                  error={state.error}
                   onToggle={() => toggleSound(sound.id)}
-                  onVolumeChange={(volume) => setVolume(sound.id, volume)}
+                  onVolumeChange={(volume) => setSoundVolume(sound.id, volume)}
                 />
               )
             })}

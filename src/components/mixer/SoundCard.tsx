@@ -5,7 +5,9 @@ type SoundCardProps = {
   icon: LucideIcon
   iconClassName: string
   isActive: boolean
+  isPlaying: boolean
   volume: number
+  error: string | null
   onToggle: () => void
   onVolumeChange: (volume: number) => void
 }
@@ -15,7 +17,9 @@ function SoundCard({
   icon: Icon,
   iconClassName,
   isActive,
+  isPlaying,
   volume,
+  error,
   onToggle,
   onVolumeChange,
 }: SoundCardProps) {
@@ -38,16 +42,17 @@ function SoundCard({
 
         <button
           type="button"
-          aria-label={`${isActive ? 'Pause' : 'Play'} ${name}`}
+          aria-label={`${isPlaying ? 'Pause' : 'Play'} ${name}`}
           aria-pressed={isActive}
+          disabled={Boolean(error)}
           onClick={onToggle}
           className={`grid size-11 place-items-center rounded-full transition duration-200 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-teal-300 ${
-            isActive
+            isPlaying
               ? 'bg-teal-300 text-[#09201e] hover:bg-teal-200'
-              : 'border border-white/10 bg-white/[0.04] text-stone-300 hover:border-white/20 hover:bg-white/[0.08] hover:text-white'
+              : 'border border-white/10 bg-white/[0.04] text-stone-300 hover:border-white/20 hover:bg-white/[0.08] hover:text-white disabled:cursor-not-allowed disabled:opacity-40'
           }`}
         >
-          {isActive ? (
+          {isPlaying ? (
             <Pause aria-hidden="true" size={18} fill="currentColor" />
           ) : (
             <Play aria-hidden="true" className="translate-x-px" size={18} fill="currentColor" />
@@ -59,11 +64,14 @@ function SoundCard({
         <div className="flex items-center justify-between gap-4">
           <div>
             <h3 className="text-lg font-semibold tracking-[-0.02em] text-stone-100">{name}</h3>
-            <p className={`mt-1 text-sm ${isActive ? 'text-teal-300' : 'text-stone-500'}`}>
-              {isActive ? 'Playing' : 'Paused'}
+            <p
+              role={error ? 'alert' : undefined}
+              className={`mt-1 text-sm ${isPlaying ? 'text-teal-300' : 'text-stone-500'}`}
+            >
+              {error ? 'Unavailable' : isPlaying ? 'Playing' : 'Ready'}
             </p>
           </div>
-          <span className="text-sm tabular-nums text-stone-500">{volume}%</span>
+          <span className="text-sm tabular-nums text-stone-500">{Math.round(volume * 100)}%</span>
         </div>
 
         <div className="mt-5 flex items-center gap-3">
@@ -71,10 +79,11 @@ function SoundCard({
           <input
             type="range"
             min="0"
-            max="100"
+            max="1"
+            step="0.01"
             value={volume}
             aria-label={`${name} volume`}
-            onChange={(event) => onVolumeChange(Number(event.target.value))}
+            onChange={(event) => onVolumeChange(event.target.valueAsNumber)}
             className="sound-volume w-full"
           />
         </div>
