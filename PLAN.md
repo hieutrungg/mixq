@@ -219,35 +219,35 @@ Definition of done:
 
 ## Theme
 
-- [ ] Light mode
-- [ ] Dark mode
-- [ ] System theme detection
-- [ ] Persist theme preference
+- [x] Light mode
+- [x] Dark mode
+- [x] System theme detection
+- [x] Persist theme preference
 
 ## Interaction polish
 
-- [ ] Hover states
-- [ ] Focus states
-- [ ] Active sound animation
-- [ ] Smooth transitions
-- [ ] Loading state where needed
+- [x] Hover states
+- [x] Focus states
+- [x] Active sound animation
+- [x] Smooth transitions
+- [x] Loading state where needed
 
 ## Accessibility
 
-- [ ] Keyboard navigation
-- [ ] Proper button labels
-- [ ] aria-label for icon-only buttons
-- [ ] slider labels
-- [ ] sufficient contrast
+- [x] Keyboard navigation
+- [x] Proper button labels
+- [x] aria-label for icon-only buttons
+- [x] slider labels
+- [x] sufficient contrast
 
 ## Responsive verification
 
 Test:
 
-- [ ] 360px mobile
-- [ ] 768px tablet
-- [ ] 1024px laptop
-- [ ] 1440px desktop
+- [x] 360px mobile
+- [x] 768px tablet
+- [x] 1024px laptop
+- [x] 1440px desktop
 
 Definition of done:
 

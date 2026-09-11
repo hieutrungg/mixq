@@ -22,17 +22,17 @@ function MasterControls({
   return (
     <section
       aria-labelledby="master-controls-heading"
-      className="rounded-3xl border border-white/[0.08] bg-[#11161a] p-5 sm:p-6"
+      className="surface-card rounded-3xl border p-5 sm:p-6"
     >
       <div className="flex flex-col justify-between gap-5 sm:flex-row sm:items-start">
         <div>
-          <p className="text-sm font-medium uppercase tracking-[0.18em] text-stone-500">
+          <p className="copy-muted text-sm font-medium uppercase tracking-[0.18em]">
             Session audio
           </p>
           <h2 id="master-controls-heading" className="mt-2 text-2xl font-semibold tracking-[-0.025em]">
             Master controls
           </h2>
-          <p className="mt-2 text-sm text-stone-400">
+          <p className="copy-secondary mt-2 text-sm">
             {playingCount > 0
               ? `${playingCount} ${playingCount === 1 ? 'sound' : 'sounds'} playing`
               : activeCount > 0
@@ -55,7 +55,7 @@ function MasterControls({
             type="button"
             disabled={playingCount === 0}
             onClick={onPauseAll}
-            className="inline-flex min-h-11 items-center gap-2 rounded-xl border border-white/10 px-4 text-sm font-medium text-stone-300 transition hover:border-white/20 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-teal-300 disabled:cursor-not-allowed disabled:opacity-35"
+            className="secondary-control inline-flex min-h-11 items-center gap-2 rounded-xl border px-4 text-sm font-medium transition focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-teal-300 disabled:cursor-not-allowed disabled:opacity-35"
           >
             <Pause aria-hidden="true" size={16} fill="currentColor" />
             Pause all
@@ -64,7 +64,7 @@ function MasterControls({
             type="button"
             disabled={activeCount === 0}
             onClick={onStopAll}
-            className="inline-flex min-h-11 items-center gap-2 rounded-xl border border-white/10 px-4 text-sm font-medium text-stone-400 transition hover:border-red-300/30 hover:text-red-300 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-red-300 disabled:cursor-not-allowed disabled:opacity-35"
+            className="secondary-control danger-control inline-flex min-h-11 items-center gap-2 rounded-xl border px-4 text-sm font-medium transition focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-red-300 disabled:cursor-not-allowed disabled:opacity-35"
           >
             <CircleStop aria-hidden="true" size={16} />
             Stop all
@@ -72,9 +72,9 @@ function MasterControls({
         </div>
       </div>
 
-      <div className="mt-7 flex items-center gap-3 border-t border-white/[0.07] pt-5">
-        <Volume2 aria-hidden="true" className="shrink-0 text-stone-500" size={18} />
-        <label htmlFor="master-volume" className="shrink-0 text-sm font-medium text-stone-300">
+      <div className="theme-divider mt-7 flex items-center gap-3 border-t pt-5">
+        <Volume2 aria-hidden="true" className="copy-muted shrink-0" size={18} />
+        <label htmlFor="master-volume" className="copy-primary shrink-0 text-sm font-medium">
           Master volume
         </label>
         <input
@@ -87,7 +87,7 @@ function MasterControls({
           onChange={(event) => onMasterVolumeChange(event.target.valueAsNumber)}
           className="sound-volume min-w-20 flex-1"
         />
-        <span className="w-10 text-right text-sm tabular-nums text-stone-500">
+        <span className="copy-muted w-10 text-right text-sm tabular-nums">
           {Math.round(masterVolume * 100)}%
         </span>
       </div>
@@ -96,4 +96,3 @@ function MasterControls({
 }
 
 export default MasterControls
-

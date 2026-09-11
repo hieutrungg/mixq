@@ -12,6 +12,7 @@ function createInitialState(definitions: readonly SoundDefinition[]): SoundState
         id: sound.id,
         isActive: false,
         isPlaying: false,
+        isLoaded: false,
         volume: sound.defaultVolume,
         error: null,
       },
@@ -46,6 +47,7 @@ export function useAudioMixer(definitions: readonly SoundDefinition[]) {
         loop: true,
         preload: true,
         volume: sound.defaultVolume,
+        onload: () => updateSoundState(sound.id, { isLoaded: true, error: null }),
         onplay: () => updateSoundState(sound.id, { isActive: true, isPlaying: true, error: null }),
         onpause: () => updateSoundState(sound.id, { isPlaying: false }),
         onstop: () => updateSoundState(sound.id, { isActive: false, isPlaying: false }),
@@ -53,6 +55,7 @@ export function useAudioMixer(definitions: readonly SoundDefinition[]) {
           updateSoundState(sound.id, {
             isActive: false,
             isPlaying: false,
+            isLoaded: false,
             error: `Could not load this sound (${String(error)}).`,
           })
         },

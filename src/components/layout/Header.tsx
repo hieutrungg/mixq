@@ -1,8 +1,16 @@
-import { AudioLines, MoonStar } from 'lucide-react'
+import { AudioLines, MoonStar, Sun } from 'lucide-react'
+import type { Theme } from '../../hooks/useTheme'
 
-function Header() {
+interface HeaderProps {
+  theme: Theme
+  onToggleTheme: () => void
+}
+
+function Header({ theme, onToggleTheme }: HeaderProps) {
+  const isDark = theme === 'dark'
+
   return (
-    <header className="border-b border-white/[0.07]">
+    <header className="site-header border-b backdrop-blur">
       <nav
         aria-label="Primary navigation"
         className="mx-auto flex h-20 w-full max-w-7xl items-center justify-between px-5 sm:px-8 lg:px-10"
@@ -11,17 +19,17 @@ function Header() {
           <span className="grid size-10 place-items-center rounded-xl border border-teal-300/20 bg-teal-300/10 text-teal-300 transition-colors group-hover:bg-teal-300/15">
             <AudioLines aria-hidden="true" size={20} strokeWidth={2} />
           </span>
-          <span className="text-xl font-semibold tracking-[-0.03em] text-white">mixq</span>
+          <span className="copy-primary text-xl font-semibold tracking-[-0.03em]">mixq</span>
         </a>
 
         <button
           type="button"
-          disabled
-          aria-label="Theme controls coming soon"
-          title="Theme controls coming soon"
-          className="grid size-10 cursor-not-allowed place-items-center rounded-xl border border-white/10 text-stone-500"
+          aria-label={`Switch to ${isDark ? 'light' : 'dark'} theme`}
+          title={`Switch to ${isDark ? 'light' : 'dark'} theme`}
+          onClick={onToggleTheme}
+          className="secondary-control grid size-10 place-items-center rounded-xl border transition duration-200 active:scale-95"
         >
-          <MoonStar aria-hidden="true" size={18} />
+          {isDark ? <Sun aria-hidden="true" size={18} /> : <MoonStar aria-hidden="true" size={18} />}
         </button>
       </nav>
     </header>

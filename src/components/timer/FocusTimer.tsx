@@ -15,18 +15,18 @@ function FocusTimer() {
   return (
     <section
       aria-labelledby="focus-timer-heading"
-      className="rounded-3xl border border-white/[0.08] bg-[#11161a] p-5 sm:p-6"
+      className="surface-card rounded-3xl border p-5 sm:p-6"
     >
       <div className="flex items-start justify-between gap-4">
         <div>
-          <p className="text-sm font-medium uppercase tracking-[0.18em] text-stone-500">
+          <p className="copy-muted text-sm font-medium uppercase tracking-[0.18em]">
             Focus session
           </p>
           <h2 id="focus-timer-heading" className="mt-2 text-2xl font-semibold tracking-[-0.025em]">
             Timer
           </h2>
         </div>
-        <span className="grid size-11 place-items-center rounded-2xl border border-violet-300/20 bg-violet-300/10 text-violet-300">
+        <span className="violet-chip grid size-11 place-items-center rounded-2xl border">
           <TimerReset aria-hidden="true" size={21} />
         </span>
       </div>
@@ -34,11 +34,11 @@ function FocusTimer() {
       <p
         aria-live="off"
         aria-label={`${Math.floor(timerState.remainingSeconds / 60)} minutes ${timerState.remainingSeconds % 60} seconds remaining`}
-        className="mt-6 text-5xl font-semibold tracking-[-0.045em] tabular-nums text-white"
+        className="copy-primary mt-6 text-5xl font-semibold tracking-[-0.045em] tabular-nums"
       >
         {formatTime(timerState.remainingSeconds)}
       </p>
-      <p className="mt-2 text-sm capitalize text-stone-500">
+      <p className="copy-muted mt-2 text-sm capitalize">
         {timerState.status === 'completed' ? 'Session complete' : timerState.status}
       </p>
 
@@ -51,8 +51,8 @@ function FocusTimer() {
             onClick={() => selectDuration(minutes)}
             className={`min-h-10 flex-1 rounded-xl border px-2 text-sm font-medium transition focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-violet-300 ${
               timerState.selectedMinutes === minutes
-                ? 'border-violet-300/40 bg-violet-300/10 text-violet-200'
-                : 'border-white/[0.08] text-stone-500 hover:border-white/15 hover:text-stone-300'
+                ? 'duration-selected'
+                : 'secondary-control'
             }`}
           >
             {minutes} min
@@ -83,7 +83,7 @@ function FocusTimer() {
         <button
           type="button"
           onClick={reset}
-          className="grid size-11 shrink-0 place-items-center rounded-xl border border-white/10 text-stone-400 transition hover:border-white/20 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-violet-300"
+          className="secondary-control grid size-11 shrink-0 place-items-center rounded-xl border transition focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-violet-300"
           aria-label="Reset focus timer"
         >
           <RotateCcw aria-hidden="true" size={17} />
@@ -94,4 +94,3 @@ function FocusTimer() {
 }
 
 export default FocusTimer
-

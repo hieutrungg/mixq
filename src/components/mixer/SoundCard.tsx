@@ -1,4 +1,4 @@
-import { Pause, Play, Volume2, type LucideIcon } from 'lucide-react'
+import { LoaderCircle, Pause, Play, Volume2, type LucideIcon } from 'lucide-react'
 
 type SoundCardProps = {
   name: string
@@ -6,6 +6,7 @@ type SoundCardProps = {
   iconClassName: string
   isActive: boolean
   isPlaying: boolean
+  isLoaded: boolean
   volume: number
   error: string | null
   onToggle: () => void
@@ -18,6 +19,7 @@ function SoundCard({
   iconClassName,
   isActive,
   isPlaying,
+  isLoaded,
   volume,
   error,
   onToggle,
@@ -25,34 +27,33 @@ function SoundCard({
 }: SoundCardProps) {
   return (
     <article
-      className={`group rounded-3xl border p-5 transition duration-200 sm:p-6 ${
-        isActive
-          ? 'border-teal-300/35 bg-[#141d1e] shadow-[0_18px_60px_-36px_rgba(94,234,212,0.55)]'
-          : 'border-white/[0.08] bg-[#11161a] hover:border-white/15 hover:bg-[#13191d]'
-      }`}
+      data-active={isActive}
+      data-playing={isPlaying}
+      aria-busy={!isLoaded}
+      className="sound-card group rounded-3xl border p-5 transition duration-200 sm:p-6"
     >
       <div className="flex items-start justify-between gap-4">
         <span
-          className={`grid size-12 place-items-center rounded-2xl border bg-black/15 ${
-            isActive ? 'border-white/10' : 'border-white/[0.06]'
-          }`}
+          className="sound-icon-tile grid size-12 place-items-center rounded-2xl border"
         >
-          <Icon aria-hidden="true" className={iconClassName} size={23} strokeWidth={1.8} />
+          <Icon aria-hidden="true" className={`sound-icon ${iconClassName}`} size={23} strokeWidth={1.8} />
         </span>
 
         <button
           type="button"
           aria-label={`${isPlaying ? 'Pause' : 'Play'} ${name}`}
           aria-pressed={isActive}
-          disabled={Boolean(error)}
+          disabled={!isLoaded || Boolean(error)}
           onClick={onToggle}
           className={`grid size-11 place-items-center rounded-full transition duration-200 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-teal-300 ${
             isPlaying
               ? 'bg-teal-300 text-[#09201e] hover:bg-teal-200'
-              : 'border border-white/10 bg-white/[0.04] text-stone-300 hover:border-white/20 hover:bg-white/[0.08] hover:text-white disabled:cursor-not-allowed disabled:opacity-40'
+              : 'secondary-control border disabled:cursor-not-allowed disabled:opacity-40'
           }`}
         >
-          {isPlaying ? (
+          {!isLoaded && !error ? (
+            <LoaderCircle aria-hidden="true" className="animate-spin" size={18} />
+          ) : isPlaying ? (
             <Pause aria-hidden="true" size={18} fill="currentColor" />
           ) : (
             <Play aria-hidden="true" className="translate-x-px" size={18} fill="currentColor" />
@@ -63,19 +64,27 @@ function SoundCard({
       <div className="mt-8">
         <div className="flex items-center justify-between gap-4">
           <div>
-            <h3 className="text-lg font-semibold tracking-[-0.02em] text-stone-100">{name}</h3>
+            <h3 className="copy-primary text-lg font-semibold tracking-[-0.02em]">{name}</h3>
             <p
               role={error ? 'alert' : undefined}
-              className={`mt-1 text-sm ${isPlaying ? 'text-teal-300' : 'text-stone-500'}`}
+              className={`mt-1 text-sm ${isPlaying ? 'accent-text' : 'copy-muted'}`}
             >
-              {error ? 'Unavailable' : isPlaying ? 'Playing' : isActive ? 'Paused' : 'Ready'}
+              {error
+                ? 'Unavailable'
+                : !isLoaded
+                  ? 'Loading…'
+                  : isPlaying
+                    ? 'Playing'
+                    : isActive
+                      ? 'Paused'
+                      : 'Ready'}
             </p>
           </div>
-          <span className="text-sm tabular-nums text-stone-500">{Math.round(volume * 100)}%</span>
+          <span className="copy-muted text-sm tabular-nums">{Math.round(volume * 100)}%</span>
         </div>
 
         <div className="mt-5 flex items-center gap-3">
-          <Volume2 aria-hidden="true" className="shrink-0 text-stone-500" size={17} />
+          <Volume2 aria-hidden="true" className="copy-muted shrink-0" size={17} />
           <input
             type="range"
             min="0"

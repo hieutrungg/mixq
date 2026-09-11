@@ -80,4 +80,8 @@ Presets are represented by the explicit `Preset` model in `src/types/preset.ts`.
 
 Master audio controls reuse the same mixer hook: pausing preserves active sounds, stopping clears them, and Howler's global volume controls the final mix. The focus timer uses a wall-clock deadline instead of decrementing a counter, which keeps its remaining time accurate when the browser throttles background tabs. Timer and audio state remain independent.
 
+Theme handling follows the operating-system preference on first visit and stores an explicit light or dark choice under `mixq.theme`. Semantic color tokens keep both themes consistent, while reduced-motion support disables decorative sound animation and shortens transitions for users who request it. Audio cards also expose loading and error states before playback is available.
+
+The M5 layout was browser-verified at 360, 768, 1024, and 1440 pixels. All interactive controls remain inside the viewport, provide keyboard focus states, and expose accessible names for icon buttons and sliders.
+
 Project progress and milestone scope are tracked in [`PLAN.md`](./PLAN.md).

@@ -9,6 +9,7 @@ import { defaultPresets } from './data/defaultPresets'
 import { sounds } from './data/sounds'
 import { useAudioMixer } from './hooks/useAudioMixer'
 import { useLocalStorage } from './hooks/useLocalStorage'
+import { useTheme } from './hooks/useTheme'
 import type { Preset, PresetSoundMap } from './types/preset'
 import type { SoundIconName } from './types/sound'
 
@@ -22,6 +23,7 @@ const soundIcons = {
 } satisfies Record<SoundIconName, typeof CloudRain>
 
 function App() {
+  const { theme, toggleTheme } = useTheme()
   const {
     soundStates,
     masterVolume,
@@ -69,18 +71,18 @@ function App() {
   }
 
   return (
-    <div className="min-h-screen bg-[#0b0f12] text-stone-100">
-      <Header />
+    <div id="top" className="app-shell min-h-screen">
+      <Header theme={theme} onToggleTheme={toggleTheme} />
 
       <main className="mx-auto w-full max-w-7xl px-5 pb-16 pt-12 sm:px-8 sm:pt-16 lg:px-10">
         <section className="mb-10 max-w-2xl sm:mb-12">
-          <p className="mb-4 text-sm font-medium uppercase tracking-[0.22em] text-teal-300">
+          <p className="accent-text mb-4 text-sm font-medium uppercase tracking-[0.22em]">
             Your ambient space
           </p>
-          <h1 className="text-4xl font-semibold leading-[1.08] tracking-[-0.035em] text-white sm:text-5xl lg:text-6xl">
+          <h1 className="copy-primary text-4xl font-semibold leading-[1.08] tracking-[-0.035em] sm:text-5xl lg:text-6xl">
             Create your perfect atmosphere.
           </h1>
-          <p className="mt-5 max-w-xl text-base leading-7 text-stone-400 sm:text-lg">
+          <p className="copy-secondary mt-5 max-w-xl text-base leading-7 sm:text-lg">
             Mix sounds. Focus. Relax.
           </p>
         </section>
@@ -101,12 +103,12 @@ function App() {
         <section aria-labelledby="soundscapes-heading">
           <div className="mb-5 flex items-end justify-between gap-4">
             <div>
-              <h2 id="soundscapes-heading" className="text-xl font-semibold text-stone-100">
+              <h2 id="soundscapes-heading" className="copy-primary text-xl font-semibold">
                 Soundscapes
               </h2>
-              <p className="mt-1 text-sm text-stone-500">Choose one or layer a few together.</p>
+              <p className="copy-muted mt-1 text-sm">Choose one or layer a few together.</p>
             </div>
-            <p className="hidden text-sm text-stone-500 sm:block">6 sounds</p>
+            <p className="copy-muted hidden text-sm sm:block">6 sounds</p>
           </div>
 
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -121,6 +123,7 @@ function App() {
                   iconClassName={sound.iconClassName}
                   isActive={state.isActive}
                   isPlaying={state.isPlaying}
+                  isLoaded={state.isLoaded}
                   volume={state.volume}
                   error={state.error}
                   onToggle={() => toggleSound(sound.id)}

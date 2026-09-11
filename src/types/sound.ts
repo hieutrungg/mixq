@@ -24,9 +24,9 @@ export interface SoundState {
   id: SoundId
   isActive: boolean
   isPlaying: boolean
+  isLoaded: boolean
   volume: number
   error: string | null
 }
 
 export type SoundStateMap = Record<SoundId, SoundState>
-
